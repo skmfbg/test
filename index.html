@@ -10,6 +10,9 @@
       border: 3px solid pink;
       margin: auto;
     }
+    #details{
+      border: 2px solid pink;
+    }
   </style>
 </head>
 <body>
@@ -21,6 +24,9 @@
     <button id="btn">Save</button>
   </div>
 
+  <div id="details">
+    
+  </div>
 
   <button id="bt">Google</button>
   <button id="button">Rdirect</button>
@@ -49,7 +55,7 @@
   const analytics = getAnalytics(app);
   
   import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider ,getRedirectResult} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+  import { signOut,getAuth, signInWithPopup, GoogleAuthProvider ,getRedirectResult} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
   
 
 function writeUserData(userId, name,add) {
@@ -81,6 +87,7 @@ signInWithPopup(auth, provider)
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
+    document.getElementById('#details').innerHTML=`user.displayName`;
     // ...
   }).catch((error) => {
     // Handle Errors here.
@@ -99,8 +106,11 @@ signInWithPopup(auth, provider)
 
 
 document.getElementById('button').addEventListener("click",()=>{
-
-signInWithRedirect(auth, provider);
+signOut(auth).then(() => {
+  alert("signOut successfully");
+}).catch((error) => {
+  // An error happened.
+});
 
 // getRedirectResult(auth)
 //   .then((result) => {
